@@ -7,7 +7,7 @@ ENV VNC_PASSWD=123456
 
 RUN ln -snf /usr/share/zoneinfo/PRC /etc/localtime && echo PRC > /etc/timezone
 
-RUN eval ${APT_INSTALL_PRE} curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools fluxbox uxterm git net-tools ${APT_INSTALL_POST}
+RUN eval ${APT_INSTALL_PRE} curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools fluxbox xterm git net-tools ${APT_INSTALL_POST}
 
 RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/chrome.deb && \
     eval ${APT_INSTALL_PRE} /tmp/chrome.deb ${APT_INSTALL_POST} && \
@@ -27,7 +27,7 @@ RUN chmod +x /opt/x11vnc_entrypoint.sh /opt/container_startup.sh
 
 RUN mkdir -p /usr/share/menu \
     && echo "?package(bash):needs=\"X11\" section=\"DockerCustom\" title=\"Google Chrome\" command=\"google-chrome --no-sandbox\"" >> /usr/share/menu/custom-docker \
-    && echo "?package(bash):needs=\"X11\" section=\"DockerCustom\" title=\"Xterm\" command=\"xterm -ls -bg black -fg white\"" >> /usr/share/menu/custom-docker && \
+    && echo "?package(bash):needs=\"X11\" section=\"DockerCustom\" title=\"Xterm\" command=\"uxterm -ls -bg black -fg white\"" >> /usr/share/menu/custom-docker && \
     update-menus
 
 WORKDIR /home/cph
