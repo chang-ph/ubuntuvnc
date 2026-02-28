@@ -7,7 +7,10 @@ ENV VNC_PASSWD=123456
 
 RUN ln -snf /usr/share/zoneinfo/PRC /etc/localtime && echo PRC > /etc/timezone
 
-RUN eval ${APT_INSTALL_PRE} curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools fluxbox xterm git net-tools ${APT_INSTALL_POST}
+RUN eval ${APT_INSTALL_PRE} \
+    curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools \
+    fluxbox xterm git net-tools python3-tk \
+    ${APT_INSTALL_POST}
 
 RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/chrome.deb && \
     eval ${APT_INSTALL_PRE} /tmp/chrome.deb ${APT_INSTALL_POST} && \
