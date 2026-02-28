@@ -36,4 +36,5 @@ USER cph
 EXPOSE 5900/tcp
 EXPOSE 5901/tcp
 
-ENTRYPOINT ["/opt/container_startup.sh"]
+ENTRYPOINT ["bash"]
+CMD ["/opt/container_startup.sh"]
