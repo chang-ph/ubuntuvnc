@@ -7,7 +7,7 @@ ENV VNC_PASSWD=123456
 
 RUN ln -snf /usr/share/zoneinfo/PRC /etc/localtime && echo PRC > /etc/timezone
 
-RUN eval ${APT_INSTALL_PRE} curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools fluxbox xterm git net-tools python3 python3-numpy ca-certificates scrot pulseaudio-utils ${APT_INSTALL_POST}
+RUN eval ${APT_INSTALL_PRE} curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools fluxbox xterm git net-tools ${APT_INSTALL_POST}
 
 RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/chrome.deb && \
     eval ${APT_INSTALL_PRE} /tmp/chrome.deb ${APT_INSTALL_POST} && \
@@ -21,6 +21,8 @@ RUN mkdir -p /home/cph/.cache /opt/startup_scripts
 
 RUN chown -R cph:cph /home/cph && chown cph:cph /opt
 
+WORKDIR .
+RUN echo `pwd` && ls
 RUN cp x11vnc_entrypoint.sh /opt/x11vnc_entrypoint.sh \
     && cp container_startup.sh /opt/container_startup.sh \
     && chmod +x /opt/x11vnc_entrypoint.sh /opt/container_startup.sh
