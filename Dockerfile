@@ -21,8 +21,9 @@ RUN mkdir -p /home/cph/.cache /opt/startup_scripts
 
 RUN chown -R cph:cph /home/cph && chown cph:cph /opt
 
-COPY x11vnc_entrypoint.sh /opt/x11vnc_entrypoint.sh
-COPY container_startup.sh /opt/container_startup.sh
+RUN cp x11vnc_entrypoint.sh /opt/x11vnc_entrypoint.sh \
+    && cp container_startup.sh /opt/container_startup.sh \
+    && chmod +x /opt/x11vnc_entrypoint.sh /opt/container_startup.sh
 
 RUN mkdir -p /usr/share/menu \
     && echo "?package(bash):needs=\"X11\" section=\"DockerCustom\" title=\"Google Chrome\" command=\"google-chrome --no-sandbox\"" >> /usr/share/menu/custom-docker \
@@ -36,4 +37,5 @@ USER cph
 EXPOSE 5900/tcp
 EXPOSE 5901/tcp
 
-ENTRYPOINT ["/opt/container_startup.sh"]
+ENTRYPOINT ["bash"]
+CMD ["/opt/container_startup.sh"]
