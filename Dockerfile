@@ -9,12 +9,16 @@ RUN ln -snf /usr/share/zoneinfo/PRC /etc/localtime && echo PRC > /etc/timezone
 
 RUN eval ${APT_INSTALL_PRE} \
     curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools \
-    fluxbox xterm git net-tools python3-tk xfce4 xfce4-goodies \
+    fluxbox xterm git net-tools python3-tk xfce4 xfce4-goodies libxtst6 \
     ${APT_INSTALL_POST}
 
+RUN curl https://www.charlesproxy.com/packages/apt/charles-repo.asc -o - | sudo tee /etc/apt/keyrings/charles-repo.asc
+RUN echo "deb [signed-by=/etc/apt/keyrings/charles-repo.asc] https://www.charlesproxy.com/packages/apt/ charles-proxy main" > /etc/apt/sources.list.d/charles.list
+
 RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/chrome.deb && \
-    eval ${APT_INSTALL_PRE} /tmp/chrome.deb ${APT_INSTALL_POST} && \
+    eval ${APT_INSTALL_PRE} /tmp/chrome.deb charles-proxy5 ${APT_INSTALL_POST} && \
     rm /tmp/chrome.deb
+
 
 RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers
 
