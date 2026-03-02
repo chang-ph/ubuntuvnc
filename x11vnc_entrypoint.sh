@@ -1,4 +1,5 @@
-# fix for clipboard being passed through
+#!/bin/bash
+
 vncconfig -nowin &
 
 if ls /opt/startup_scripts/*.sh 1> /dev/null 2>&1; then
@@ -6,4 +7,5 @@ if ls /opt/startup_scripts/*.sh 1> /dev/null 2>&1; then
     bash "$f" -H || (echo "Error with $f: $?" >> /var/log/x11vnc_entrypoint.log)
   done
 fi
-/usr/bin/fluxbox
+
+startxfce4 &
