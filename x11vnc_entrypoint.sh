@@ -8,4 +8,4 @@ if ls /opt/startup_scripts/*.sh 1> /dev/null 2>&1; then
   done
 fi
 
-startxfce4 &
+startxfce4
