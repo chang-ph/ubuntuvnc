@@ -32,8 +32,6 @@ WORKDIR /opt
 COPY . /opt
 RUN chmod +x /opt/x11vnc_entrypoint.sh /opt/container_startup.sh
 
-RUN echo '#!/bin/bash\nstartxfce4 &\n' > ~/.vnc/xstartup && chmod +x ~/.vnc/xstartup
-
 # RUN mkdir -p /usr/share/menu \
 #     && echo "?package(bash):needs=\"X11\" section=\"DockerCustom\" title=\"Google Chrome\" command=\"google-chrome --no-sandbox\"" >> /usr/share/menu/custom-docker \
 #     && echo "?package(bash):needs=\"X11\" section=\"DockerCustom\" title=\"Xterm\" command=\"uxterm -ls -bg black -fg white\"" >> /usr/share/menu/custom-docker && \
