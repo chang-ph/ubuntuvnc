@@ -22,7 +22,7 @@ RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
 
 
 RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers \
-    && sed 's/-Xmx1024M/-Xmx4096M/g' /usr/bin/charles
+    && sed -i 's/-Xmx1024M/-Xmx4096M/g' /usr/bin/charles
 
 RUN useradd -m -s /bin/bash -U -G sudo -u ${UID_OF_DOCKERUSER} cph
 
