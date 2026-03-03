@@ -9,7 +9,8 @@ RUN ln -snf /usr/share/zoneinfo/PRC /etc/localtime && echo PRC > /etc/timezone
 
 RUN eval ${APT_INSTALL_PRE} \
     curl sudo tigervnc-standalone-server tigervnc-common tigervnc-tools \
-    fluxbox xterm git net-tools python3-tk xfce4 xfce4-goodies dbus-x11 libxtst6 \
+    fluxbox xterm git net-tools python3-tk xfce4 xfce4-goodies dbus-x11 \
+    libglib2.0-bin libxtst6 \
     ${APT_INSTALL_POST}
 
 RUN curl https://www.charlesproxy.com/packages/apt/charles-repo.asc -o - | sudo tee /etc/apt/keyrings/charles-repo.asc
@@ -20,7 +21,8 @@ RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
     rm /tmp/chrome.deb
 
 
-RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers
+RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers \
+    && sed 's/-Xmx1024M/-Xmx4096M/g' /usr/bin/charles
 
 RUN useradd -m -s /bin/bash -U -G sudo -u ${UID_OF_DOCKERUSER} cph
 
