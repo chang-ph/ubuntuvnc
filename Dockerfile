@@ -13,12 +13,16 @@ RUN eval ${APT_INSTALL_PRE} \
     libglib2.0-bin libxtst6 \
     ${APT_INSTALL_POST}
 
-RUN curl https://www.charlesproxy.com/packages/apt/charles-repo.asc -o - | sudo tee /etc/apt/keyrings/charles-repo.asc
-RUN echo "deb [signed-by=/etc/apt/keyrings/charles-repo.asc] https://www.charlesproxy.com/packages/apt/ charles-proxy main" > /etc/apt/sources.list.d/charles.list
+# RUN curl https://www.charlesproxy.com/packages/apt/charles-repo.asc -o - | sudo tee /etc/apt/keyrings/charles-repo.asc
+# RUN echo "deb [signed-by=/etc/apt/keyrings/charles-repo.asc] https://www.charlesproxy.com/packages/apt/ charles-proxy main" > /etc/apt/sources.list.d/charles.list
 
-RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/chrome.deb && \
-    eval ${APT_INSTALL_PRE} /tmp/chrome.deb charles-proxy5 ${APT_INSTALL_POST} && \
-    rm /tmp/chrome.deb
+RUN curl $(curl -L https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json -o - | jq -r '.channels.Stable.downloads.chrome[]|select(.platform=="linux64").url') -o /opt/chrome.zip \
+    && curl $(curl -L https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json -o - | jq -r '.channels.Stable.downloads.chromedriver[]|select(.platform=="linux64").url') -o /opt/driver.zip
+
+# RUN curl -L https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json -o - | jq -r '.channels.stable.downloads.chrome
+# RUN curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/chrome.deb && \
+#     eval ${APT_INSTALL_PRE} /tmp/chrome.deb charles-proxy5 ${APT_INSTALL_POST} && \
+#     rm /tmp/chrome.deb
 
 
 RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers \
