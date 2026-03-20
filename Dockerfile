@@ -25,8 +25,9 @@ RUN curl $(curl -L https://googlechromelabs.github.io/chrome-for-testing/last-kn
 #     rm /tmp/chrome.deb
 
 
-RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers \
-    && sed -i 's/-Xmx1024M/-Xmx4096M/g' /usr/bin/charles
+# RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers \
+#     && sed -i 's/-Xmx1024M/-Xmx4096M/g' /usr/bin/charles
+RUN sed -i 's/%sudo\s\+ALL=(ALL:ALL)\s\+ALL/%sudo ALL=(ALL:ALL) NOPASSWD :ALL/' /etc/sudoers
 
 RUN useradd -m -s /bin/bash -U -G sudo -u ${UID_OF_DOCKERUSER} cph
 
